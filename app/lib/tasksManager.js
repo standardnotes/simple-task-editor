@@ -100,8 +100,6 @@ export default class TasksManager {
       this.note.content.text = this.dataString;
       this.componentManager.saveItem(this.note);
     }
-
-    console.log("Saved:", this.dataString);
   }
 
 }

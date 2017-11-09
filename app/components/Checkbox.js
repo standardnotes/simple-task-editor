@@ -32,7 +32,6 @@ class Checkbox extends Component {
           />
 
           {task.content}
-          {`(${task.rawString})`}
         </label>
       </div>
     );
