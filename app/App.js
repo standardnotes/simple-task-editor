@@ -1,8 +1,6 @@
 import React from 'react';
-import Tasks from './Tasks';
-import TasksManager from '../lib/tasksManager';
-
-require('./App.css');
+import Tasks from './components/Tasks';
+import TasksManager from './lib/tasksManager';
 
 export default class App extends React.Component {
   constructor(props) {

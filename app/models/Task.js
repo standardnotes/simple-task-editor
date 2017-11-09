@@ -1,7 +1,7 @@
 export default class Task {
 
-  static OpenPrefix = "[] ";
-  static CompletedPrefix = "[x] ";
+  static OpenPrefix = "- [] ";
+  static CompletedPrefix = "- [x] ";
 
   constructor(rawString) {
     this.rawString = rawString;
@@ -30,6 +30,15 @@ export default class Task {
   markOpen() {
     this.completed = false;
     this.updateRawString();
+  }
+
+  setContentString(string) {
+    this.rawString = string;
+    if(this.completed) {
+      this.rawString = Task.CompletedPrefix + this.rawString;
+    } else {
+      this.rawString = Task.OpenPrefix + this.rawString;
+    }
   }
 
   updateRawString() {

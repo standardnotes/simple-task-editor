@@ -1,6 +1,6 @@
 import React from 'react';
 import TasksManager from '../lib/tasksManager';
-import Checkbox from './Checkbox';
+import TaskRow from './TaskRow';
 import Task from '../models/Task';
 import CreateTask from './CreateTask';
 import Sortable from 'sortablejs';
@@ -47,7 +47,16 @@ export default class Tasks extends React.Component {
 
   toggleTaskStatus = (task) => {
     task.toggleStatus();
-    this.taskStatusUpdated();
+    TasksManager.get().moveTaskToTop(task);
+
+    setTimeout(() => {
+      // Allow UI to show checkmark before transferring to other list
+      this.taskStatusUpdated();
+    }, 300);
+  }
+
+  handleTaskTextChange = (task) => {
+    TasksManager.get().save();
   }
 
   taskStatusUpdated() {
@@ -99,10 +108,11 @@ export default class Tasks extends React.Component {
 
   checkboxForTask(task, index) {
     return (
-      <Checkbox
+      <TaskRow
         task={task}
         handleCheckboxChange={this.toggleTaskStatus}
-        key={task.content}
+        handleTextChange={this.handleTaskTextChange}
+        key={TasksManager.get().keyForTask(task)}
       />
     )
   }
@@ -135,7 +145,7 @@ export default class Tasks extends React.Component {
           </div>
 
           {completedTasks.length > 0 &&
-            <a onClick={this.onClearCompleted}>Clear Completed</a>
+            <a className="clear-button" onClick={this.onClearCompleted}>Clear Completed</a>
           }
         </div>
 

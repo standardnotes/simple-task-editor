@@ -26,7 +26,6 @@ export default class TasksManager {
     });
 
     this.componentManager.streamContextItem((note) => {
-      // console.log("TaskEditor|", "Got note:", note);
       this.note = note;
       this.dataString = note.content.text;
       this.reloadData();
@@ -42,9 +41,13 @@ export default class TasksManager {
     if(!string) {string = ''}
     var allTasks = string.split("\n");
     var openTasks = [], completedTasks = [];
-    return allTasks.map((rawString) => {
+    return allTasks.filter((s) => {return s.replace(/ /g, '').length > 0}).map((rawString) => {
       return this.createTask(rawString);
     });
+  }
+
+  keyForTask(task) {
+    return this.tasks.indexOf(task);
   }
 
   reloadData() {
@@ -75,6 +78,11 @@ export default class TasksManager {
     this.tasks = this.tasks.filter((task) => {
       return !tasks.includes(task);
     })
+  }
+
+  moveTaskToTop(task) {
+    this.tasks.splice(this.tasks.indexOf(task), 1);
+    this.tasks.unshift(task);
   }
 
   swapTaskOrder(taskA, taskB) {

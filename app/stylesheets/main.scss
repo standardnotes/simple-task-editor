@@ -9,9 +9,46 @@ label {
   display: block;
 }
 
-.task.open {
+.task {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+
+  &.open {
+
+  }
+
+ .hover-container {
+   display: none;
+   width: 100px;
+   height: 50px;
+   background-color: red;
+
+   &:hover {
+     display: block;
+   }
+ }
+
+ .checkbox, .task-label {
+
+ }
+
+ .checkbox {
+   margin-top: 7px;
+ }
+
+ .task-input-label {
+   border: none;
+   width: 100%;
+   resize: none;
+   font-size: 16px;
+   outline: none;
+   resize: none;
+   overflow: hidden;
+ }
 
 }
+
 
 .task-dragging {
   background-color: white;
@@ -20,6 +57,11 @@ label {
 .completed {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.clear-button {
+  margin-top: 10px;
+  display: block;
 }
 
 input[type='text'] {
