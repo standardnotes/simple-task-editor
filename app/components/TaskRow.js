@@ -73,8 +73,6 @@ class TaskRow extends Component {
           className='task-input-label'
         />
 
-        <label>{task.content}</label>
-
         <div className="hover-container">
           <button>Rename</button>
           <button>Delete</button>
