@@ -3,11 +3,20 @@ import React, { Component, PropTypes } from 'react';
 class TaskRow extends Component {
   constructor(props) {
     super(props);
-    this.state = {isChecked: props.task.completed, text: props.task.content};
+    this.state = {isChecked: props.task.completed, task: props.task};
   }
 
   componentDidMount() {
     this.resizeTextArea(this.textArea);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({task: newProps.task, isChecked: newProps.task.completed});
+
+    // Wait till after render
+    setTimeout(() => {
+      this.resizeTextArea(this.textArea);
+    }, 1);
   }
 
   toggleCheckboxChange = () => {
@@ -25,7 +34,7 @@ class TaskRow extends Component {
     this.props.task.setContentString(text);
     this.props.handleTextChange(this.props.task, text);
 
-    this.setState({text: text})
+    this.forceUpdate();
   }
 
   onKeyUp = ($event) => {
@@ -34,14 +43,16 @@ class TaskRow extends Component {
   }
 
   resizeTextArea(textarea) {
-    textarea.style.height = "5px";
+    // set to 1 first to reset scroll height in case it shrunk
+    textarea.style.height = "1px";
     textarea.style.height = (textarea.scrollHeight)+"px";
   }
 
   render() {
-    const { isChecked } = this.state;
+    let { isChecked } = this.state;
 
     let task = this.props.task;
+
     let classes = `task ${task.completed ? 'completed' : ''}`
     return (
       <div className={classes}>
@@ -56,11 +67,13 @@ class TaskRow extends Component {
 
         <textarea
           ref={(textarea) => {this.textArea = textarea}}
-          value={this.state.text}
+          value={task.content}
           onChange={this.onTextChange}
           onKeyUp={this.onKeyUp} type="text"
           className='task-input-label'
         />
+
+        <label>{task.content}</label>
 
         <div className="hover-container">
           <button>Rename</button>

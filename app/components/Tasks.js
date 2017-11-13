@@ -83,7 +83,7 @@ export default class Tasks extends React.Component {
     var fromTask = this.taskAtIndex(isSourceOpen ? 0 : 1, fromIndex);
     var toTask = this.taskAtIndex(isDestinationOpen ? 0 : 1, toIndex);
 
-    TasksManager.get().swapTaskOrder(fromTask, toTask);
+    TasksManager.get().changeTaskPosition(fromTask, toTask);
     if(isDestinationCompleted) {
       fromTask.markCompleted();
     } else {
@@ -106,7 +106,7 @@ export default class Tasks extends React.Component {
     }
   }
 
-  checkboxForTask(task, index) {
+  taskRowForTask(task, index) {
     return (
       <TaskRow
         task={task}
@@ -118,7 +118,7 @@ export default class Tasks extends React.Component {
   }
 
   render() {
-    var {openTasks, completedTasks} = this.state;
+    let {openTasks, completedTasks} = this.state;
 
     return (
       <div>
@@ -131,7 +131,7 @@ export default class Tasks extends React.Component {
           <h3>Open Tasks</h3>
           <div id="open-tasks">
             {openTasks.map((task, index) => {
-              return this.checkboxForTask(task, index);
+              return this.taskRowForTask(task, index);
             })}
           </div>
         </div>
@@ -140,7 +140,7 @@ export default class Tasks extends React.Component {
           <h3>Completed Tasks</h3>
           <div id="completed-tasks">
             {completedTasks.map((task, index) => {
-              return this.checkboxForTask(task, index);
+              return this.taskRowForTask(task, index);
             })}
           </div>
 

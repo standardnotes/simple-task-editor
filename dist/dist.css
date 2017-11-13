@@ -1,0 +1,71 @@
+body {
+  font-size: 16px;
+  font-family: sans-serif;
+  margin: 15px; }
+
+label {
+  margin-bottom: 12px;
+  display: block; }
+
+.task {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px; }
+  .task .hover-container {
+    display: none;
+    width: 100px;
+    height: 50px;
+    background-color: red; }
+    .task .hover-container:hover {
+      display: block; }
+  .task .checkbox {
+    margin-top: 7px; }
+  .task .task-input-label {
+    border: none;
+    width: 100%;
+    resize: none;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    overflow: hidden; }
+
+.task-dragging {
+  background-color: white; }
+
+.completed {
+  text-decoration: line-through;
+  opacity: 0.6; }
+
+.clear-button {
+  margin-top: 10px;
+  display: block; }
+
+input[type='text'] {
+  width: 100%;
+  height: 30px;
+  outline: none;
+  font-size: 16px;
+  padding-left: 6px;
+  margin-bottom: 6px; }
+
+input[type='checkbox'] {
+  margin-right: 10px; }
+
+.task-section {
+  margin-bottom: 16px; }
+
+h3 {
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: normal;
+  opacity: 0.3; }
+
+a {
+  font-weight: bold;
+  font-size: 10px;
+  opacity: 0.3;
+  cursor: pointer; }
+
+a:hover {
+  opacity: 0.8;
+  text-decoration: underline; }

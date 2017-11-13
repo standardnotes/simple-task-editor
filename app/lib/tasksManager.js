@@ -1,6 +1,8 @@
 import Task from "../models/Task";
 import ComponentManager from 'sn-components-api';
 
+let TaskDelimitter = "\n\n";
+
 export default class TasksManager {
 
   /* Singleton */
@@ -27,6 +29,11 @@ export default class TasksManager {
 
     this.componentManager.streamContextItem((note) => {
       this.note = note;
+
+      if(note.isMetadataUpdate) {
+        return;
+      }
+
       this.dataString = note.content.text;
       this.reloadData();
       this.dataChangeHandler && this.dataChangeHandler(this.tasks);
@@ -39,7 +46,7 @@ export default class TasksManager {
 
   parseRawTasksString(string) {
     if(!string) {string = ''}
-    var allTasks = string.split("\n");
+    var allTasks = string.split(TaskDelimitter);
     var openTasks = [], completedTasks = [];
     return allTasks.filter((s) => {return s.replace(/ /g, '').length > 0}).map((rawString) => {
       return this.createTask(rawString);
@@ -47,7 +54,7 @@ export default class TasksManager {
   }
 
   keyForTask(task) {
-    return this.tasks.indexOf(task);
+    return this.tasks.indexOf(task) + task.rawString;
   }
 
   reloadData() {
@@ -68,6 +75,7 @@ export default class TasksManager {
   addTask(task) {
     this.tasks.unshift(task);
     this.save();
+    this.reloadData();
   }
 
   completedTasks() {
@@ -85,13 +93,11 @@ export default class TasksManager {
     this.tasks.unshift(task);
   }
 
-  swapTaskOrder(taskA, taskB) {
-    let from = this.tasks.indexOf(taskA);
-    let to = this.tasks.indexOf(taskB);
+  changeTaskPosition(task, taskOccupyingTargetLocation) {
+    let from = this.tasks.indexOf(task);
+    let to = this.tasks.indexOf(taskOccupyingTargetLocation);
 
-    var temp = this.tasks[from];
-    this.tasks[from] = this.tasks[to];
-    this.tasks[to] = temp;
+    this.tasks = this.tasks.move(from, to);
   }
 
   clearCompleted() {
@@ -102,7 +108,7 @@ export default class TasksManager {
   save() {
     this.dataString = this.tasks.map((task) => {
       return task.rawString
-    }).join("\n");
+    }).join(TaskDelimitter);
 
     if(this.note) {
       this.note.content.text = this.dataString;
@@ -111,3 +117,20 @@ export default class TasksManager {
   }
 
 }
+
+Array.prototype.move = function (old_index, new_index) {
+    while (old_index < 0) {
+        old_index += this.length;
+    }
+    while (new_index < 0) {
+        new_index += this.length;
+    }
+    if (new_index >= this.length) {
+        var k = new_index - this.length;
+        while ((k--) + 1) {
+            this.push(undefined);
+        }
+    }
+    this.splice(new_index, 0, this.splice(old_index, 1)[0]);
+    return this; // for testing purposes
+};
