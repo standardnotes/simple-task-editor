@@ -45,6 +45,11 @@ export default class Tasks extends React.Component {
     this.setState({openTasks: openTasks, completedTasks: completedTasks});
   }
 
+  deleteTask = (task) => {
+    TasksManager.get().deleteTask(task);
+    this.updateTasks();
+  }
+
   toggleTaskStatus = (task) => {
     task.toggleStatus();
     TasksManager.get().moveTaskToTop(task);
@@ -112,6 +117,7 @@ export default class Tasks extends React.Component {
         task={task}
         handleCheckboxChange={this.toggleTaskStatus}
         handleTextChange={this.handleTaskTextChange}
+        deleteTask={this.deleteTask}
         key={TasksManager.get().keyForTask(task)}
       />
     )

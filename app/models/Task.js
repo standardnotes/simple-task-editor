@@ -17,6 +17,10 @@ export default class Task {
     return this.rawString.replace(Task.OpenPrefix, "").replace(Task.CompletedPrefix, "");
   }
 
+  isEmpty() {
+    return this.content.replace(/ /g, '').length > 0
+  }
+
   toggleStatus() {
     this.completed = !this.completed;
     this.updateRawString();

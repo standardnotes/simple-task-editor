@@ -38,6 +38,13 @@ class TaskRow extends Component {
   }
 
   onKeyUp = ($event) => {
+    // Delete task if empty and enter pressed
+    if($event.keyCode == 13) {
+      if(this.props.task.isEmpty()) {
+        this.props.deleteTask(this.props.task);
+        $event.preventDefault();
+      }
+    }
     var element = $event.target;
     this.resizeTextArea(element);
   }

@@ -105,6 +105,11 @@ export default class TasksManager {
     this.save();
   }
 
+  deleteTask(task) {
+    this.removeTasks([task]);
+    this.save();
+  }
+
   save() {
     this.dataString = this.tasks.map((task) => {
       return task.rawString
