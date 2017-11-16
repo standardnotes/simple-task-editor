@@ -1,6 +1,6 @@
 export default class Task {
 
-  static OpenPrefix = "- [] ";
+  static OpenPrefix      = "- [ ] ";
   static CompletedPrefix = "- [x] ";
 
   constructor(rawString) {
