@@ -1,7 +1,7 @@
 import Task from "../models/Task";
 import ComponentManager from 'sn-components-api';
 
-let TaskDelimitter = "\n\n";
+let TaskDelimitter = "\n";
 
 export default class TasksManager {
 

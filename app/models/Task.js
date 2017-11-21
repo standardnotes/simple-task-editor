@@ -18,7 +18,7 @@ export default class Task {
   }
 
   isEmpty() {
-    return this.content.replace(/ /g, '').length > 0
+    return this.content.replace(/ /g, '').length == 0;
   }
 
   toggleStatus() {

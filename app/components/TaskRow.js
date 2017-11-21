@@ -30,7 +30,7 @@ class TaskRow extends Component {
   }
 
   onTextChange = ($event) => {
-    var text = event.target.value;
+    var text = $event.target.value;
     this.props.task.setContentString(text);
     this.props.handleTextChange(this.props.task, text);
 
@@ -47,6 +47,14 @@ class TaskRow extends Component {
     }
     var element = $event.target;
     this.resizeTextArea(element);
+  }
+
+  onKeyPress = ($event) => {
+    if($event.key == "Enter") {
+      // We want to disable any action on enter, since newlines are reserved
+      // and are how tasks are delimitted.
+      $event.preventDefault();
+    }
   }
 
   resizeTextArea(textarea) {
@@ -76,7 +84,9 @@ class TaskRow extends Component {
           ref={(textarea) => {this.textArea = textarea}}
           value={task.content}
           onChange={this.onTextChange}
-          onKeyUp={this.onKeyUp} type="text"
+          onKeyUp={this.onKeyUp}
+          onKeyPress={this.onKeyPress}
+          type="text"
           className='task-input-label'
         />
 
