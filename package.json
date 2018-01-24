@@ -1,6 +1,6 @@
 {
   "name": "sn-simple-task-editor",
-  "version": "1.0.122",
+  "version": "1.0.123",
   "main": "dist/dist.js",
   "scripts": {
     "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
@@ -8,6 +8,9 @@
     "build": "webpack",
     "start": "webpack-dev-server --devtool eval --progress --hot --content-base app",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
+  },
+  "sn": {
+    "main": "dist/index.html"
   },
   "dependencies": {},
   "devDependencies": {
