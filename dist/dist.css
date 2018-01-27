@@ -11,13 +11,6 @@ label {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px; }
-  .task .hover-container {
-    display: none;
-    width: 100px;
-    height: 50px;
-    background-color: red; }
-    .task .hover-container:hover {
-      display: block; }
   .task .checkbox {
     margin-top: 7px; }
   .task .task-input-label {
@@ -27,7 +20,8 @@ label {
     font-size: 16px;
     outline: none;
     resize: none;
-    overflow: hidden; }
+    overflow: hidden;
+    background-color: transparent; }
 
 .task-dragging {
   background-color: white; }
@@ -46,7 +40,11 @@ input[type='text'] {
   outline: none;
   font-size: 16px;
   padding-left: 6px;
-  margin-bottom: 6px; }
+  margin-bottom: 6px;
+  background-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.2); }
 
 input[type='checkbox'] {
   margin-right: 10px; }

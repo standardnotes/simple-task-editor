@@ -87,13 +87,9 @@ class TaskRow extends Component {
           onKeyUp={this.onKeyUp}
           onKeyPress={this.onKeyPress}
           type="text"
-          className='task-input-label'
+          dir="auto"
+          className='task-input-label body-text-color'
         />
-
-        <div className="hover-container">
-          <button>Rename</button>
-          <button>Delete</button>
-        </div>
       </div>
     );
   }
