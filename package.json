@@ -1,6 +1,6 @@
 {
   "name": "sn-simple-task-editor",
-  "version": "1.0.124",
+  "version": "1.1.0",
   "main": "dist/dist.js",
   "scripts": {
     "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
@@ -19,7 +19,7 @@
     "react": "15.x",
     "react-dom": "15.x",
     "sortablejs": "^1.7.0",
-    "sn-components-api": "1.0.242",
+    "sn-components-api": "1.1.0",
     "babel-core": "6.x",
     "babel-eslint": "7.x",
     "babel-loader": "6.x",
