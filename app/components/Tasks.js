@@ -11,19 +11,22 @@ export default class Tasks extends React.Component {
     super(props);
     this.state = {openTasks: [], completedTasks: []};
     TasksManager.get().setDataChangeHandler((tasks) => {
+      // We need TasksManager.get().isMobile() to be defined, and this handler is called once on bridge ready.
+      this.initiateSorting();
       this.updateTasks();
     })
   }
 
   componentDidMount() {
-    if(!TasksManager.get().isMobile()) {
-      this.initiateSorting();
-    }
-
     this.updateTasks();
   }
 
   initiateSorting() {
+    if(TasksManager.get().isMobile() || this.didInitiateSorting) {
+      return;
+    }
+    this.didInitiateSorting = true;
+
     let properties = {
       draggable: '.task',
       dragClass: 'task-dragging',
