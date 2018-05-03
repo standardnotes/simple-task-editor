@@ -40,6 +40,10 @@ export default class TasksManager {
     });
   }
 
+  isMobile() {
+    return this.componentManager.environment == "mobile";
+  }
+
   setDataChangeHandler(handler) {
     this.dataChangeHandler = handler;
   }

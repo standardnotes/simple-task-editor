@@ -1,6 +1,6 @@
 {
   "name": "sn-simple-task-editor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/dist.js",
   "scripts": {
     "lint": "eslint --cache --ignore-path .gitignore --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
@@ -12,14 +12,10 @@
   "sn": {
     "main": "dist/index.html"
   },
-  "dependencies": {},
+  "dependencies": {
+    "webpack-cli": "^2.1.2"
+  },
   "devDependencies": {
-    "babel-runtime": "6.x",
-    "extract-text-webpack-plugin": "^3.0.2",
-    "react": "15.x",
-    "react-dom": "15.x",
-    "sortablejs": "^1.7.0",
-    "sn-components-api": "1.1.0",
     "babel-core": "6.x",
     "babel-eslint": "7.x",
     "babel-loader": "6.x",
@@ -27,6 +23,7 @@
     "babel-preset-es2015": "6.x",
     "babel-preset-react": "6.x",
     "babel-preset-stage-0": "6.x",
+    "babel-runtime": "6.x",
     "commitizen": "^2.9.3",
     "conventional-changelog-cli": "1.x",
     "copy-webpack-plugin": "latest",
@@ -40,13 +37,18 @@
     "eslint-plugin-jsx-a11y": "3.x",
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "latest",
+    "extract-text-webpack-plugin": "^3.0.2",
     "husky": "^0.12.0",
     "node-sass": "^4.6.0",
     "open-browser-webpack-plugin": "0.0.3",
+    "react": "15.x",
+    "react-dom": "15.x",
     "sass-loader": "^6.0.6",
+    "sn-components-api": "1.1.1",
+    "sortablejs": "^1.7.0",
     "style-loader": "~0.13.1",
     "validate-commit-msg": "2.x",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "latest"
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "2.5.1"
   }
 }

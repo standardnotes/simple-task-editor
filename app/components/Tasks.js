@@ -16,6 +16,14 @@ export default class Tasks extends React.Component {
   }
 
   componentDidMount() {
+    if(!TasksManager.get().isMobile()) {
+      this.initiateSorting();
+    }
+
+    this.updateTasks();
+  }
+
+  initiateSorting() {
     let properties = {
       draggable: '.task',
       dragClass: 'task-dragging',
@@ -27,8 +35,6 @@ export default class Tasks extends React.Component {
 
     properties['name'] = 'completed-tasks';
     Sortable.create(document.getElementById('completed-tasks'), properties);
-
-    this.updateTasks();
   }
 
   updateTasks() {
