@@ -92,6 +92,22 @@ export default class TasksManager {
     })
   }
 
+  // Splits into completed and non completed piles, and organizes them into an ordered array
+  splitTasks() {
+    var tasks = this.getTasks();
+    var openTasks = [], completedTasks = [];
+    tasks.forEach((task, index) => {
+      if(task.completed) {
+        completedTasks.push(task);
+      } else {
+        openTasks.push(task);
+      }
+    })
+
+    this.tasks = openTasks.concat(completedTasks);
+    return {openTasks: openTasks, completedTasks: completedTasks};
+  }
+
   moveTaskToTop(task) {
     this.tasks.splice(this.tasks.indexOf(task), 1);
     this.tasks.unshift(task);

@@ -41,17 +41,7 @@ export default class Tasks extends React.Component {
   }
 
   updateTasks() {
-    var tasks = TasksManager.get().getTasks();
-    var openTasks = [], completedTasks = [];
-    tasks.forEach((task, index) => {
-      if(task.completed) {
-        completedTasks.push(task);
-      } else {
-        openTasks.push(task);
-      }
-    })
-
-    this.setState({openTasks: openTasks, completedTasks: completedTasks});
+    this.setState(TasksManager.get().splitTasks());
   }
 
   deleteTask = (task) => {
@@ -61,7 +51,9 @@ export default class Tasks extends React.Component {
 
   toggleTaskStatus = (task) => {
     task.toggleStatus();
-    TasksManager.get().moveTaskToTop(task);
+    if(!task.completed) {
+      TasksManager.get().moveTaskToTop(task);
+    }
 
     setTimeout(() => {
       // Allow UI to show checkmark before transferring to other list
