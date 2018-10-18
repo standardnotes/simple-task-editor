@@ -105,7 +105,9 @@ export default class TasksManager {
     })
 
     this.tasks = openTasks.concat(completedTasks);
-    return {openTasks: openTasks, completedTasks: completedTasks};
+    this.categorizedTasks = {openTasks: openTasks, completedTasks: completedTasks};
+
+    return this.categorizedTasks;
   }
 
   moveTaskToTop(task) {
@@ -130,6 +132,52 @@ export default class TasksManager {
     this.save();
   }
 
+  buildHtmlPreview() {
+    var openTasks = this.categorizedTasks.openTasks;
+    var completedTasks = this.categorizedTasks.completedTasks;
+    var totalLength = openTasks.length + completedTasks.length;
+
+    var taskPreviewLimit = 3;
+    var tasksToPreview = Math.min(openTasks.length, taskPreviewLimit);
+
+    var html = "<div>";
+    html += `<div style="margin-top: 8px;"><strong>${completedTasks.length}/${totalLength} tasks completed</strong></div>`;
+    html += `<progress max="100" style="margin-top: 10px; width: 100%;" value="${(completedTasks.length/totalLength) * 100}"></progress>`;
+
+    if(tasksToPreview > 0) {
+      html += "<ul style='padding-left: 19px; margin-top: 10px;'>";
+      for(var i = 0; i < tasksToPreview; i++) {
+        var task = openTasks[i];
+        html += `<li style='margin-bottom: 6px;'>${task.content}</li>`
+      }
+      html += "</ul>";
+
+      if(openTasks.length > tasksToPreview) {
+        var diff = openTasks.length - tasksToPreview;
+        var noun = diff == 1 ? "task" : "tasks";
+        html += `<div><strong>And ${diff} other open ${noun}.</strong></div>`
+      }
+    }
+
+    html += "</div>"
+
+    return html;
+  }
+
+  buildPlainPreview() {
+    var openTasks = this.categorizedTasks.openTasks;
+    var completedTasks = this.categorizedTasks.completedTasks;
+    var totalLength = openTasks.length + completedTasks.length;
+
+    var taskPreviewLimit = 1;
+    var tasksToPreview = Math.min(openTasks.length, taskPreviewLimit);
+
+    var plain = "";
+    plain += `${completedTasks.length}/${totalLength} tasks completed.`;
+
+    return plain;
+  }
+
   save() {
     this.dataString = this.tasks.map((task) => {
       return task.rawString
@@ -137,6 +185,8 @@ export default class TasksManager {
 
     if(this.note) {
       this.note.content.text = this.dataString;
+      this.note.content.preview_html = this.buildHtmlPreview();
+      this.note.content.preview_plain = this.buildPlainPreview();
       this.componentManager.saveItem(this.note);
     }
   }
