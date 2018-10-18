@@ -184,6 +184,8 @@ export default class TasksManager {
     }).join(TaskDelimitter);
 
     if(this.note) {
+      // required to build dynamic previews
+      this.splitTasks();
       this.note.content.text = this.dataString;
       this.note.content.preview_html = this.buildHtmlPreview();
       this.note.content.preview_plain = this.buildPlainPreview();
