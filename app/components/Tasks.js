@@ -9,7 +9,7 @@ export default class Tasks extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {openTasks: [], completedTasks: []};
+    this.state = {unsavedTask: '', openTasks: [], completedTasks: []};
     TasksManager.get().setDataChangeHandler((tasks) => {
       // We need TasksManager.get().isMobile() to be defined, and this handler is called once on bridge ready.
       this.initiateSorting();
@@ -105,6 +105,13 @@ export default class Tasks extends React.Component {
     this.updateTasks();
   }
 
+  saveUnsavedTask = (rawString) => {
+    // save current entry to task list that has not been officially saved by pressing 'enter' yet
+    TasksManager.get().setUnsavedTask(rawString);
+    TasksManager.get().save();
+    this.updateTasks();
+  }
+
   onClearCompleted = () => {
     if(confirm("Are you sure you want to clear completed tasks?")) {
       TasksManager.get().clearCompleted();
@@ -125,13 +132,13 @@ export default class Tasks extends React.Component {
   }
 
   render() {
-    let {openTasks, completedTasks} = this.state;
+    let {unsavedTask, openTasks, completedTasks} = this.state;
 
     return (
       <div className="element-text-color">
 
         <div>
-          <CreateTask onSubmit={this.createTask} />
+          <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
         </div>
 
         <div className='task-section'>
