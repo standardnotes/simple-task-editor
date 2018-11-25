@@ -17,23 +17,21 @@ export default class CreateTask extends React.Component {
   }
 
   onTextChange = (event) => {
-    var rawString = event.target.value;
-    this.setState({rawString: rawString});
-
     // save this as the current 'unsaved' task if while we're not officially saving it as an actual task yet
+    var rawString = event.target.value;
     this.props.onUpdate(rawString);
   }
 
   handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      this.submitTask();
+      var rawString = event.target.value;
+      this.submitTask(rawString);
     }
   }
 
-  submitTask() {
+  submitTask(value) {
     TasksManager.get().setUnsavedTask('');
-    this.props.onSubmit(this.state.rawString);
-    this.setState({rawString: ''});
+    this.props.onSubmit(value);
   }
 
   render() {
