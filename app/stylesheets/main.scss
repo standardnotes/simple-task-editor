@@ -64,6 +64,10 @@ input[type='text'] {
   border-width: 1px;
   border-style: solid;
   border-color: rgba(black, 0.20);
+  border-radius: 0;
+
+  // To remove default styles on mobile safari
+  -webkit-appearance: none;
 }
 
 input[type='checkbox'] {

@@ -45,7 +45,9 @@ input[type='text'] {
   background-color: transparent;
   border-width: 1px;
   border-style: solid;
-  border-color: rgba(0, 0, 0, 0.2); }
+  border-color: rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  -webkit-appearance: none; }
 
 input[type='checkbox'] {
   margin-right: 10px; }
