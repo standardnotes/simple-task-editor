@@ -35,6 +35,7 @@ export default class TasksManager {
       }
 
       this.dataString = note.content.text;
+      this.unsavedTask = note.content.unsavedTask;
       this.reloadData();
       this.dataChangeHandler && this.dataChangeHandler(this.tasks);
     });
@@ -82,6 +83,10 @@ export default class TasksManager {
     this.reloadData();
   }
 
+  setUnsavedTask(text) {
+    this.unsavedTask = text;
+  }
+
   completedTasks() {
     return this.tasks.filter((task) => {return task.completed == true})
   }
@@ -105,7 +110,7 @@ export default class TasksManager {
     })
 
     this.tasks = openTasks.concat(completedTasks);
-    this.categorizedTasks = {openTasks: openTasks, completedTasks: completedTasks};
+    this.categorizedTasks = {unsavedTask: this.unsavedTask, openTasks: openTasks, completedTasks: completedTasks};
 
     return this.categorizedTasks;
   }
@@ -188,6 +193,7 @@ export default class TasksManager {
         // required to build dynamic previews
         this.splitTasks();
         this.note.content.text = this.dataString;
+        this.note.content.unsavedTask = this.unsavedTask;
         this.note.content.preview_html = this.buildHtmlPreview();
         this.note.content.preview_plain = this.buildPlainPreview();
       });
