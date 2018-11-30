@@ -189,13 +189,17 @@ export default class TasksManager {
     }).join(TaskDelimitter);
 
     if(this.note) {
-      this.componentManager.saveItemWithPresave(this.note, () => {
+      // Be sure to capture this object as a variable, as this.note may be reassigned in `streamContextItem`, so by the time
+      // you modify it in the presave block, it may not be the same object anymore, so the presave values will not be applied to
+      // the right object, and it will save incorrectly.
+      let note = this.note;
+      this.componentManager.saveItemWithPresave(note, () => {
         // required to build dynamic previews
         this.splitTasks();
-        this.note.content.text = this.dataString;
-        this.note.content.unsavedTask = this.unsavedTask;
-        this.note.content.preview_html = this.buildHtmlPreview();
-        this.note.content.preview_plain = this.buildPlainPreview();
+        note.content.text = this.dataString;
+        note.content.unsavedTask = this.unsavedTask;
+        note.content.preview_html = this.buildHtmlPreview();
+        note.content.preview_plain = this.buildPlainPreview();
       });
     }
   }
