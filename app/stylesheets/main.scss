@@ -27,6 +27,7 @@ label {
  }
 
  .task-input-label {
+   font-family: sans-serif;
    border: none;
    width: 100%;
    resize: none;
@@ -36,9 +37,7 @@ label {
    overflow: hidden;
    background-color: transparent;
  }
-
 }
-
 
 .task-dragging {
   background-color: white;
