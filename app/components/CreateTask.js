@@ -1,5 +1,4 @@
 import React from 'react';
-import TasksManager from '../lib/tasksManager';
 
 export default class CreateTask extends React.Component {
 
@@ -30,7 +29,6 @@ export default class CreateTask extends React.Component {
   }
 
   submitTask(value) {
-    TasksManager.get().setUnsavedTask('');
     this.props.onSubmit(value);
   }
 

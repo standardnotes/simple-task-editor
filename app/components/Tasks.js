@@ -100,6 +100,7 @@ export default class Tasks extends React.Component {
   }
 
   createTask = (rawString) => {
+    TasksManager.get().setUnsavedTask('');
     let task = TasksManager.get().createTask(rawString);
     TasksManager.get().addTask(task);
     this.updateTasks();
