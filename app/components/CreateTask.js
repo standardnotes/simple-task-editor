@@ -21,8 +21,8 @@ export default class CreateTask extends React.Component {
     this.props.onUpdate(rawString);
   }
 
-  handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+  handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
       var rawString = event.target.value;
       this.submitTask(rawString);
     }
