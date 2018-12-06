@@ -23,8 +23,9 @@ export default class TasksManager {
       }
     ]
 
-    this.componentManager = new ComponentManager(permissions, function(){
+    this.componentManager = new ComponentManager(permissions, () => {
       // on ready
+      this.onReady && this.onReady();
     });
 
     this.componentManager.streamContextItem((note) => {
@@ -41,8 +42,16 @@ export default class TasksManager {
     });
   }
 
+  getPlatform() {
+    return this.componentManager.platform;
+  }
+
   isMobile() {
     return this.componentManager.environment == "mobile";
+  }
+
+  setOnReady(onReady) {
+    this.onReady = onReady;
   }
 
   setDataChangeHandler(handler) {

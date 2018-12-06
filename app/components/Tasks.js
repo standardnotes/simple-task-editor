@@ -15,6 +15,13 @@ export default class Tasks extends React.Component {
       this.initiateSorting();
       this.updateTasks();
     })
+
+    TasksManager.get().setOnReady(() => {
+      let platform = TasksManager.get().getPlatform();
+      // add platform class to main <html> element
+      var root = document.documentElement;
+      root.className += platform;
+    })
   }
 
   componentDidMount() {
@@ -136,7 +143,7 @@ export default class Tasks extends React.Component {
     let {unsavedTask, openTasks, completedTasks} = this.state;
 
     return (
-      <div className="element-text-color">
+      <div className={"element-text-color"}>
 
         <div>
           <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
