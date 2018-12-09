@@ -47,6 +47,7 @@
     "style-loader": "~0.13.1",
     "validate-commit-msg": "2.x",
     "webpack": "3.8.1",
-    "webpack-dev-server": "2.5.1"
+    "webpack-dev-server": "2.5.1",
+    "sn-stylekit": "2.0.1"
   }
 }

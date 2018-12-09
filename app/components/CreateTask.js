@@ -26,7 +26,7 @@ export default class CreateTask extends React.Component {
   render() {
     return (
       <input
-        className='create-task-input body-text-color border-color' 
+        className='create-task-input' 
         autoFocus='true'
         type='text'
         dir='auto'

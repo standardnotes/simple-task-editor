@@ -88,7 +88,7 @@ class TaskRow extends Component {
           onKeyPress={this.onKeyPress}
           type="text"
           dir="auto"
-          className='task-input-label body-text-color'
+          className='task-input-textarea'
         />
       </div>
     );

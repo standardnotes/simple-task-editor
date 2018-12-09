@@ -38,7 +38,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.css', '.scss'],
+    alias: {
+        stylekit: path.join(__dirname, 'node_modules/sn-stylekit/dist/stylekit.css')
+    }
   },
   plugins: [
     new ExtractTextPlugin({ filename: './dist.css', disable: false, allChunks: true}),

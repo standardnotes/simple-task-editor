@@ -1,7 +1,14 @@
+@import '~stylekit';
+
+html {
+  font-size: var(--sn-stylekit-base-font-size);
+}
+
 body {
-  font-size: 16px;
   font-family: sans-serif;
   margin: 15px;
+  color: var(--sn-stylekit-editor-foreground-color);
+  background-color: var(--sn-stylekit-editor-background-color);
 }
 
 label {
@@ -25,12 +32,12 @@ label {
  .checkbox {
    margin-top: 7px;
  }
-
- .task-input-label {
+ textarea.task-input-textarea {
    border: none;
    width: 100%;
    resize: none;
-   font-size: 16px;
+   font-size: var(--sn-stylekit-font-size-editor);
+   color: var(--sn-stylekit-editor-foreground-color);
    outline: none;
    resize: none;
    overflow: hidden;
@@ -54,17 +61,16 @@ label {
   display: block;
 }
 
-input[type='text'] {
+.create-task-input {
   width: 100%;
   height: 30px;
   outline: none;
-  font-size: 16px;
   padding-left: 6px;
   margin-bottom: 6px;
-  background-color: transparent;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgba(black, 0.20);
+  font-size: var(--sn-stylekit-font-size-editor);
+  border: 1px solid var(--sn-stylekit-border-color);
+  background-color: var(--sn-stylekit-contrast-background-color);
+  color: var(--sn-stylekit-contrast-foreground-color);
 }
 
 input[type='checkbox'] {

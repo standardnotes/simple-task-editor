@@ -136,7 +136,7 @@ export default class Tasks extends React.Component {
     let {openTasks, completedTasks} = this.state;
 
     return (
-      <div className="element-text-color">
+      <div>
 
         <div>
           <CreateTask onSubmit={this.createTask} />
