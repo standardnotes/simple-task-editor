@@ -42,12 +42,11 @@
     "react-dom": "15.x",
     "sass-loader": "^6.0.6",
     "sn-components-api": "1.1.11",
-    "sn-stylekit": "1.1.7",
+    "sn-stylekit": "2.0.1",
     "sortablejs": "^1.7.0",
     "style-loader": "~0.13.1",
     "validate-commit-msg": "2.x",
     "webpack": "3.8.1",
-    "webpack-dev-server": "2.5.1",
-    "sn-stylekit": "2.0.1"
+    "webpack-dev-server": "2.5.1"
   }
 }
