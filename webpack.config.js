@@ -33,7 +33,7 @@ module.exports = {
       { test: /\.js[x]?$/, include: [
         path.resolve(__dirname, 'app'),
         path.resolve(__dirname, 'node_modules/sortablejs/Sortable.min.js'),
-        path.resolve(__dirname, 'node_modules/sn-components-api/dist/dist.js')
+        path.resolve(__dirname, 'node_modules/sn-components-api/dist/dist.js'),
       ], exclude: /node_modules/, loader: 'babel-loader' }
     ]
   },

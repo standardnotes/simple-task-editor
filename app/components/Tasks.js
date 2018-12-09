@@ -9,11 +9,18 @@ export default class Tasks extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {openTasks: [], completedTasks: []};
+    this.state = {unsavedTask: '', openTasks: [], completedTasks: []};
     TasksManager.get().setDataChangeHandler((tasks) => {
       // We need TasksManager.get().isMobile() to be defined, and this handler is called once on bridge ready.
       this.initiateSorting();
       this.updateTasks();
+    })
+
+    TasksManager.get().setOnReady(() => {
+      let platform = TasksManager.get().getPlatform();
+      // add platform class to main <html> element
+      var root = document.documentElement;
+      root.className += platform;
     })
   }
 
@@ -41,17 +48,7 @@ export default class Tasks extends React.Component {
   }
 
   updateTasks() {
-    var tasks = TasksManager.get().getTasks();
-    var openTasks = [], completedTasks = [];
-    tasks.forEach((task, index) => {
-      if(task.completed) {
-        completedTasks.push(task);
-      } else {
-        openTasks.push(task);
-      }
-    })
-
-    this.setState({openTasks: openTasks, completedTasks: completedTasks});
+    this.setState(TasksManager.get().splitTasks());
   }
 
   deleteTask = (task) => {
@@ -61,7 +58,9 @@ export default class Tasks extends React.Component {
 
   toggleTaskStatus = (task) => {
     task.toggleStatus();
-    TasksManager.get().moveTaskToTop(task);
+    if(!task.completed) {
+      TasksManager.get().moveTaskToTop(task);
+    }
 
     setTimeout(() => {
       // Allow UI to show checkmark before transferring to other list
@@ -108,8 +107,16 @@ export default class Tasks extends React.Component {
   }
 
   createTask = (rawString) => {
+    TasksManager.get().setUnsavedTask('');
     let task = TasksManager.get().createTask(rawString);
     TasksManager.get().addTask(task);
+    this.updateTasks();
+  }
+
+  saveUnsavedTask = (rawString) => {
+    // save current entry to task list that has not been officially saved by pressing 'enter' yet
+    TasksManager.get().setUnsavedTask(rawString);
+    TasksManager.get().save();
     this.updateTasks();
   }
 
@@ -133,13 +140,13 @@ export default class Tasks extends React.Component {
   }
 
   render() {
-    let {openTasks, completedTasks} = this.state;
+    let {unsavedTask, openTasks, completedTasks} = this.state;
 
     return (
       <div>
 
         <div>
-          <CreateTask onSubmit={this.createTask} />
+          <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
         </div>
 
         <div className='task-section'>

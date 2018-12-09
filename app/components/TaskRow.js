@@ -29,31 +29,31 @@ class TaskRow extends Component {
     handleCheckboxChange(this.props.task);
   }
 
-  onTextChange = ($event) => {
-    var text = $event.target.value;
+    onTextChange = (event) => {
+    var text = event.target.value;
     this.props.task.setContentString(text);
     this.props.handleTextChange(this.props.task, text);
 
     this.forceUpdate();
   }
 
-  onKeyUp = ($event) => {
+  onKeyUp = (event) => {
     // Delete task if empty and enter pressed
-    if($event.keyCode == 13) {
+    if(event.keyCode == 13) {
       if(this.props.task.isEmpty()) {
         this.props.deleteTask(this.props.task);
-        $event.preventDefault();
+        event.preventDefault();
       }
     }
-    var element = $event.target;
+    var element = event.target;
     this.resizeTextArea(element);
   }
 
-  onKeyPress = ($event) => {
-    if($event.key == "Enter") {
+  onKeyPress = (event) => {
+    if(event.key == "Enter") {
       // We want to disable any action on enter, since newlines are reserved
       // and are how tasks are delimitted.
-      $event.preventDefault();
+      event.preventDefault();
     }
   }
 
