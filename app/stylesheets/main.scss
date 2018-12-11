@@ -2,13 +2,14 @@
 
 html {
   font-size: var(--sn-stylekit-base-font-size);
+  background-color: transparent; // to help with seamless transition while loading themes
 }
 
 body {
   font-family: sans-serif;
   margin: 15px;
   color: var(--sn-stylekit-editor-foreground-color);
-  background-color: var(--sn-stylekit-editor-background-color);
+  background-color: transparent;
 }
 
 label {
