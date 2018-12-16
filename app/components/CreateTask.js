@@ -39,7 +39,7 @@ export default class CreateTask extends React.Component {
         autoFocus='true'
         type='text'
         dir='auto'
-        value={this.state.rawString}
+        value={this.props.unsavedTask}
         onChange={this.onTextChange}
         onKeyPress={this.handleKeyPress}
       />
