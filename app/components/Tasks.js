@@ -25,6 +25,7 @@ export default class Tasks extends React.Component {
   }
 
   componentDidMount() {
+    TasksManager.get().initiateBridge();
     this.updateTasks();
   }
 

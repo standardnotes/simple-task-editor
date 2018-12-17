@@ -12,10 +12,6 @@ export default class TasksManager {
     return this.instance;
   }
 
-  constructor() {
-    this.initiateBridge();
-  }
-
   initiateBridge() {
     var permissions = [
       {
