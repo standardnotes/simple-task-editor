@@ -435,6 +435,7 @@
   resize: none; }
 
 .sn-component input.sk-input.clear {
+  color: var(--sn-stylekit-foreground-color);
   background-color: transparent;
   border: none; }
 
@@ -1883,6 +1884,7 @@ label {
   .task .checkbox {
     margin-top: 7px; }
   .task textarea.task-input-textarea {
+    font-family: sans-serif;
     border: none;
     width: 100%;
     resize: none;

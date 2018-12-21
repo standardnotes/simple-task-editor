@@ -29,10 +29,13 @@ label {
  .checkbox, .task-label {
 
  }
+ 
  .checkbox {
    margin-top: 7px;
  }
+
  textarea.task-input-textarea {
+   font-family: sans-serif;
    border: none;
    width: 100%;
    resize: none;
