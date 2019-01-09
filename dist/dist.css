@@ -1873,16 +1873,70 @@ body {
   color: var(--sn-stylekit-editor-foreground-color);
   background-color: transparent; }
 
-label {
-  margin-bottom: 12px;
-  display: block; }
-
 .task {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px; }
+  .task .checkbox-container {
+    padding-left: 20px;
+    margin-top: 6px;
+    margin-left: 1px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* On mouse-over, add a grey background color */
+    /* When the checkbox is checked, add a blue background */
+    /* When the mouse is held on the box */
+    /* Show the checkmark when checked */
+    /* Hide the browser's default checkbox */ }
+    .task .checkbox-container input:checked ~ .checkmark:after {
+      display: block; }
+    .task .checkbox-container input:checked ~ .checkmark:after {
+      display: block; }
+    .task .checkbox-container:hover input ~ .checkmark {
+      border-color: var(--sn-stylekit-border-color); }
+    .task .checkbox-container input:checked ~ .checkmark {
+      background-color: var(--sn-stylekit-info-color);
+      border-color: var(--sn-stylekit-info-color); }
+    .task .checkbox-container input:active ~ .checkmark {
+      background-color: var(--sn-stylekit-info-color); }
+    .task .checkbox-container input:checked ~ .checkmark:after {
+      display: block; }
+    .task .checkbox-container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0; }
   .task .checkbox {
     margin-top: 7px; }
+  .task .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 10px;
+    width: 10px;
+    border-radius: 1px;
+    background-color: var(--sn-stylekit-contrast-background-color);
+    border: 1px solid var(--sn-stylekit-contrast-border-color); }
+    .task .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 3px;
+      top: 1px;
+      width: 3px;
+      height: 6px;
+      border: solid white;
+      border-width: 0 1px 1px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg); }
   .task textarea.task-input-textarea {
     font-family: sans-serif;
     border: none;
@@ -1914,12 +1968,13 @@ label {
   margin-bottom: 6px;
   font-size: var(--sn-stylekit-font-size-editor);
   border: 1px solid var(--sn-stylekit-border-color);
+  border-radius: 2px;
   background-color: var(--sn-stylekit-contrast-background-color);
-  color: var(--sn-stylekit-contrast-foreground-color); }
-
-.task input[type='checkbox'] {
-  margin-right: 10px;
-  width: 10px; }
+  color: var(--sn-stylekit-contrast-foreground-color);
+  /* Remove default shadow for iOS mobile */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
 
 .task-section {
   margin-bottom: 16px; }

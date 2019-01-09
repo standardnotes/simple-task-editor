@@ -1,4 +1,5 @@
 import React from 'react';
+import TasksManager from '../lib/tasksManager';
 
 export default class CreateTask extends React.Component {
 
@@ -13,6 +14,12 @@ export default class CreateTask extends React.Component {
 
   componentDidUpdate(props) {
     this.setState({ rawString: props.unsavedTask })
+  }
+
+  componentDidMount() {
+    if(!TasksManager.get().isMobile()) {
+      this.input.focus();
+    }
   }
 
   onTextChange = (event) => {
@@ -36,7 +43,7 @@ export default class CreateTask extends React.Component {
     return (
       <input
         className='create-task-input'
-        autoFocus='true'
+        ref={(ref) => {this.input = ref}}
         type='text'
         dir='auto'
         value={this.props.unsavedTask}

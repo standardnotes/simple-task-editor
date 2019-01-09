@@ -43,7 +43,7 @@ export default class TasksManager {
   }
 
   isMobile() {
-    return this.componentManager.environment == "mobile";
+    return this.componentManager && this.componentManager.environment == "mobile";
   }
 
   setOnReady(onReady) {

@@ -21,6 +21,7 @@ export default class Tasks extends React.Component {
       // add platform class to main <html> element
       var root = document.documentElement;
       root.className += platform;
+      this.setState({ready: true})
     })
   }
 
@@ -146,9 +147,11 @@ export default class Tasks extends React.Component {
     return (
       <div>
 
-        <div>
-          <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
-        </div>
+        {this.state.ready &&
+          <div>
+            <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
+          </div>
+        }
 
         <div className='task-section'>
           <h3>Open Tasks</h3>

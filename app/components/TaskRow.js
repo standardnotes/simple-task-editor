@@ -72,13 +72,16 @@ class TaskRow extends Component {
     return (
       <div className={classes}>
 
-        <input
-          type="checkbox"
-          value={task.content}
-          checked={isChecked}
-          onChange={this.toggleCheckboxChange}
-          className="checkbox"
-        />
+        <label className="checkbox-container">
+          <input
+            type="checkbox"
+            value={task.content}
+            checked={isChecked}
+            onChange={this.toggleCheckboxChange}
+            className="checkbox"
+          />
+          <span className="checkmark"></span>
+        </label>
 
         <textarea
           ref={(textarea) => {this.textArea = textarea}}

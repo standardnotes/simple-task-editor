@@ -12,26 +12,92 @@ body {
   background-color: transparent;
 }
 
-label {
-  margin-bottom: 12px;
-  display: block;
-}
-
 .task {
   display: flex;
   flex-direction: row;
   margin-bottom: 8px;
 
-  &.open {
+  .checkbox-container {
+    padding-left: 20px;
+    margin-top: 6px;
+    margin-left: 1px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    /* On mouse-over, add a grey background color */
+    &:hover input ~ .checkmark {
+      border-color: var(--sn-stylekit-border-color);
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    input:checked ~ .checkmark {
+      background-color: var(--sn-stylekit-info-color);
+      border-color: var(--sn-stylekit-info-color);
+    }
+
+    /* When the mouse is held on the box */
+    input:active ~ .checkmark {
+      background-color: var(--sn-stylekit-info-color);
+      // border-color: var(--sn-stylekit-info-contrast-color);
+    }
+
+    /* Show the checkmark when checked */
+    input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    /* Hide the browser's default checkbox */
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
   }
 
- .checkbox, .task-label {
-
- }
- 
  .checkbox {
    margin-top: 7px;
+ }
+
+ .checkmark {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 10px;
+   width: 10px;
+   border-radius: 1px;
+   background-color: var(--sn-stylekit-contrast-background-color);;
+   border: 1px solid var(--sn-stylekit-contrast-border-color);
+
+   &:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 3px;
+    top: 1px;
+    width: 3px;
+    height: 6px;
+    border: solid white;
+    border-width: 0 1px 1px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+   }
  }
 
  textarea.task-input-textarea {
@@ -70,13 +136,14 @@ label {
   margin-bottom: 6px;
   font-size: var(--sn-stylekit-font-size-editor);
   border: 1px solid var(--sn-stylekit-border-color);
+  border-radius: 2px;
   background-color: var(--sn-stylekit-contrast-background-color);
   color: var(--sn-stylekit-contrast-foreground-color);
-}
 
-.task input[type='checkbox'] {
-  margin-right: 10px;
-  width: 10px;
+  /* Remove default shadow for iOS mobile */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
 .task-section {
