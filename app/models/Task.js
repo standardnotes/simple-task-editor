@@ -1,11 +1,14 @@
 export default class Task {
 
   static OpenPrefix      = "- [ ] ";
+  static AllowedPrefixes = /^- \[x\] /i;
   static CompletedPrefix = "- [x] ";
 
   constructor(rawString) {
     this.rawString = rawString;
-    this.completed = rawString.startsWith(Task.CompletedPrefix);
+
+    // allow both capital and lowercase X on completed when parsing
+    this.completed = Task.AllowedPrefixes.test(rawString);
 
     if(!this.completed && !rawString.startsWith(Task.OpenPrefix)) {
       // This is a text being created from user input, prepend open prefix
@@ -14,7 +17,7 @@ export default class Task {
   }
 
   get content() {
-    return this.rawString.replace(Task.OpenPrefix, "").replace(Task.CompletedPrefix, "");
+    return this.rawString.replace(Task.OpenPrefix, "").replace(Task.AllowedPrefixes, "");
   }
 
   isEmpty() {
@@ -49,7 +52,7 @@ export default class Task {
     if(this.completed) {
       this.rawString = this.rawString.replace(Task.OpenPrefix, Task.CompletedPrefix);
     } else {
-      this.rawString = this.rawString.replace(Task.CompletedPrefix, Task.OpenPrefix);
+      this.rawString = this.rawString.replace(Task.AllowedPrefixes, Task.OpenPrefix);
     }
   }
 }
