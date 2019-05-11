@@ -16,6 +16,10 @@ export default class Task {
     }
   }
 
+  stringRepresentation() {
+    return this.rawString();
+  }
+
   get content() {
     return this.rawString.replace(Task.OpenPrefix, "").replace(Task.AllowedPrefixes, "");
   }

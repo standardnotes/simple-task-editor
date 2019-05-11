@@ -1,6 +1,5 @@
 import React from 'react';
-import Tasks from './components/Tasks';
-import TasksManager from './lib/tasksManager';
+import GroupList from './components/GroupList';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -9,8 +8,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="sn-component windows-web">
-        <Tasks />
+      <div className="sn-component">
+        <GroupList />
       </div>
     );
   }

@@ -1,37 +1,23 @@
 import React from 'react';
-import TasksManager from '../lib/tasksManager';
+import ExtensionBridge from '../lib/ExtensionBridge';
 import TaskRow from './TaskRow';
 import Task from '../models/Task';
 import CreateTask from './CreateTask';
 import Sortable from 'sortablejs';
 
-export default class Tasks extends React.Component {
+export default class GroupComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {unsavedTask: '', openTasks: [], completedTasks: []};
-    TasksManager.get().setDataChangeHandler((tasks) => {
-      // We need TasksManager.get().isMobile() to be defined, and this handler is called once on bridge ready.
-      this.initiateSorting();
-      this.updateTasks();
-    })
-
-    TasksManager.get().setOnReady(() => {
-      let platform = TasksManager.get().getPlatform();
-      // add platform class to main <html> element
-      var root = document.documentElement;
-      root.className += platform;
-      this.setState({ready: true})
-    })
-  }
-
-  componentDidMount() {
-    TasksManager.get().initiateBridge();
-    this.updateTasks();
+    this.state = {
+      unsavedTask: '',
+      openTasks: props.group.openTasks(),
+      completedTasks: props.group.completedTasks(),
+    };
   }
 
   initiateSorting() {
-    if(TasksManager.get().isMobile() || this.didInitiateSorting) {
+    if(ExtensionBridge.get().isMobile() || this.didInitiateSorting) {
       return;
     }
     this.didInitiateSorting = true;
@@ -49,34 +35,21 @@ export default class Tasks extends React.Component {
     Sortable.create(document.getElementById('completed-tasks'), properties);
   }
 
-  updateTasks() {
-    this.setState(TasksManager.get().splitTasks());
-  }
-
   deleteTask = (task) => {
-    TasksManager.get().deleteTask(task);
-    this.updateTasks();
+    this.props.group.removeTasks([task]);
+    this.props.onChange();
   }
 
   toggleTaskStatus = (task) => {
     task.toggleStatus();
     if(!task.completed) {
-      TasksManager.get().moveTaskToTop(task);
+      this.props.group.moveTaskToTop(task);
     }
 
     setTimeout(() => {
       // Allow UI to show checkmark before transferring to other list
-      this.taskStatusUpdated();
+      this.props.onChange();
     }, 300);
-  }
-
-  handleTaskTextChange = (task) => {
-    TasksManager.get().save();
-  }
-
-  taskStatusUpdated() {
-    this.updateTasks();
-    TasksManager.get().save();
   }
 
   taskAtIndex(list, relativeIndex) {
@@ -98,34 +71,33 @@ export default class Tasks extends React.Component {
     var fromTask = this.taskAtIndex(isSourceOpen ? 0 : 1, fromIndex);
     var toTask = this.taskAtIndex(isDestinationOpen ? 0 : 1, toIndex);
 
-    TasksManager.get().changeTaskPosition(fromTask, toTask);
+    this.props.group.changeTaskPosition(fromTask, toTask);
     if(isDestinationCompleted) {
       fromTask.markCompleted();
     } else {
       fromTask.markOpen();
     }
 
-    this.taskStatusUpdated();
+    this.props.onChange();
   }
 
   createTask = (rawString) => {
-    TasksManager.get().setUnsavedTask('');
-    let task = TasksManager.get().createTask(rawString);
-    TasksManager.get().addTask(task);
-    this.updateTasks();
+    this.props.group.setUnsavedTask('');
+    let task = new Task(rawString);
+    this.props.group.addTask(task);
+    this.props.onChange();
   }
 
   saveUnsavedTask = (rawString) => {
     // save current entry to task list that has not been officially saved by pressing 'enter' yet
-    TasksManager.get().setUnsavedTask(rawString);
-    TasksManager.get().save();
-    this.updateTasks();
+    this.props.group.setUnsavedTask(rawString);
+    this.props.onChange();
   }
 
   onClearCompleted = () => {
-    if(confirm("Are you sure you want to clear completed tasks?")) {
-      TasksManager.get().clearCompleted();
-      this.updateTasks();
+    if(confirm("Are you sure you want to clear completed tasks for this group?")) {
+      this.props.group.clearCompleted();
+      this.props.onChange();
     }
   }
 
@@ -134,9 +106,9 @@ export default class Tasks extends React.Component {
       <TaskRow
         task={task}
         handleCheckboxChange={this.toggleTaskStatus}
-        handleTextChange={this.handleTaskTextChange}
+        handleTextChange={this.props.onChange}
         deleteTask={this.deleteTask}
-        key={TasksManager.get().keyForTask(task)}
+        key={this.props.group.keyForTask(task)}
       />
     )
   }
@@ -147,11 +119,11 @@ export default class Tasks extends React.Component {
     return (
       <div>
 
-        {this.state.ready &&
-          <div>
-            <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
-          </div>
-        }
+        <h3>{this.props.group.name}</h3>
+
+        <div>
+          <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
+        </div>
 
         <div className='task-section'>
           <h3>Open Tasks</h3>

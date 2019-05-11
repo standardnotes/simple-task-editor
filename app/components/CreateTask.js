@@ -1,5 +1,5 @@
 import React from 'react';
-import TasksManager from '../lib/tasksManager';
+import ExtensionBridge from '../lib/ExtensionBridge';
 
 export default class CreateTask extends React.Component {
 
@@ -17,7 +17,7 @@ export default class CreateTask extends React.Component {
   }
 
   componentDidMount() {
-    if(!TasksManager.get().isMobile()) {
+    if(!ExtensionBridge.get().isMobile()) {
       this.input.focus();
     }
   }
