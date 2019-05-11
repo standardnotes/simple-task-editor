@@ -10,9 +10,7 @@ export default class GroupList extends React.Component {
       groups: ExtensionBridge.get().getGroups()
     };
 
-    ExtensionBridge.get().setDataChangeHandler((tasks) => {
-      // We need ExtensionBridge.get().isMobile() to be defined, and this handler is called once on bridge ready.
-      this.initiateSorting();
+    ExtensionBridge.get().setDataChangeHandler(() => {
       this.reloadGroups();
     })
 
@@ -36,6 +34,11 @@ export default class GroupList extends React.Component {
 
   onGroupDataChange = (group) => {
     ExtensionBridge.get().save();
+    this.reloadGroups();
+  }
+
+  onAddGroup = () => {
+    ExtensionBridge.get().addGroup("New group");
   }
 
   render() {
@@ -48,6 +51,9 @@ export default class GroupList extends React.Component {
             group={group}
           />
         )}
+        <div id="add-group-button" className="sk-button info" onClick={this.onAddGroup}>
+          <div className="sk-label">New Group</div>
+        </div>
       </div>
     )
   }

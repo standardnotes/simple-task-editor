@@ -1,9 +1,13 @@
-static UnsavedTaskPrefix = "|| ";
+import TaskParser from "../lib/TaskParser";
 
 export default class Group {
 
   constructor(name, tasks) {
     this.name = name;
+    this.tasks = tasks || [];
+  }
+
+  setTasks(tasks) {
     this.tasks = tasks;
   }
 
@@ -27,10 +31,10 @@ export default class Group {
     let strings = [this.name];
     // if we have an unsaved string, save it as well as part of the section
     if(this.unsavedTask && this.unsavedTask.length > 0) {
-      strings.push(UnsavedTaskPrefix + this.unsavedTask);
+      strings.push(TaskParser.UnsavedTaskPrefix + this.unsavedTask);
     }
-    strings = string.concat(taskStrings);
-    let result = string.join("\n");
+    strings = strings.concat(taskStrings);
+    let result = strings.join("\n");
     return result;
   }
 
@@ -46,11 +50,11 @@ export default class Group {
     this.tasks.unshift(task);
   }
 
-  openTasks() {
+  getOpenTasks() {
     return this.tasks.filter((task) => {return !task.completed})
   }
 
-  completedTasks() {
+  getCompletedTasks() {
     return this.tasks.filter((task) => {return task.completed == true})
   }
 

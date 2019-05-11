@@ -17,7 +17,7 @@ export default class Task {
   }
 
   stringRepresentation() {
-    return this.rawString();
+    return this.rawString;
   }
 
   get content() {

@@ -11,16 +11,17 @@ export default class GroupComponent extends React.Component {
     super(props);
     this.state = {
       unsavedTask: '',
-      openTasks: props.group.openTasks(),
-      completedTasks: props.group.completedTasks(),
     };
   }
 
-  initiateSorting() {
-    if(ExtensionBridge.get().isMobile() || this.didInitiateSorting) {
+  componentDidUpdate() {
+    this.addSortingToElements();
+  }
+
+  addSortingToElements() {
+    if(ExtensionBridge.get().isMobile()) {
       return;
     }
-    this.didInitiateSorting = true;
 
     let properties = {
       draggable: '.task',
@@ -28,11 +29,17 @@ export default class GroupComponent extends React.Component {
       onEnd: this.taskCompletedDragging
     };
 
-    properties['name'] = 'open-tasks';
-    Sortable.create(document.getElementById('open-tasks'), properties);
+    if(!this.didConfigureOpenTasks && this.openTasksElement) {
+      properties['name'] = 'open-tasks';
+      Sortable.create(this.openTasksElement, properties);
+      this.didConfigureOpenTasks = true;
+    }
 
-    properties['name'] = 'completed-tasks';
-    Sortable.create(document.getElementById('completed-tasks'), properties);
+    if(!this.didConfigureCompletedTasks && this.completedTasksElement) {
+      properties['name'] = 'completed-tasks';
+      Sortable.create(this.completedTasksElement, properties);
+      this.didConfigureCompletedTasks = true;
+    }
   }
 
   deleteTask = (task) => {
@@ -54,16 +61,16 @@ export default class GroupComponent extends React.Component {
 
   taskAtIndex(list, relativeIndex) {
     if(list == 0) {
-      return this.state.openTasks[relativeIndex];
+      return this.props.group.getOpenTasks()[relativeIndex];
     } else {
-      return this.state.completedTasks[relativeIndex];
+      return this.props.group.getCompletedTasks()[relativeIndex];
     }
   }
 
   taskCompletedDragging = (evt) => {
-    let isSourceOpen =  evt.from.id == 'open-tasks';
-    let isSourceCompleted =  evt.from.id == 'completed-tasks';
-    let isDestinationCompleted = evt.to.id == 'completed-tasks';
+    let isSourceOpen =  evt.from.className.includes('open-tasks');
+    let isSourceCompleted =  evt.from.className.includes('completed-tasks');
+    let isDestinationCompleted = evt.to.className.includes('completed-tasks');
     let isDestinationOpen = !isDestinationCompleted;
     let fromIndex = evt.oldIndex;
     let toIndex = evt.newIndex;
@@ -72,6 +79,7 @@ export default class GroupComponent extends React.Component {
     var toTask = this.taskAtIndex(isDestinationOpen ? 0 : 1, toIndex);
 
     this.props.group.changeTaskPosition(fromTask, toTask);
+
     if(isDestinationCompleted) {
       fromTask.markCompleted();
     } else {
@@ -82,9 +90,9 @@ export default class GroupComponent extends React.Component {
   }
 
   createTask = (rawString) => {
-    this.props.group.setUnsavedTask('');
     let task = new Task(rawString);
     this.props.group.addTask(task);
+    this.props.group.setUnsavedTask('');
     this.props.onChange();
   }
 
@@ -114,41 +122,49 @@ export default class GroupComponent extends React.Component {
   }
 
   render() {
-    let {unsavedTask, openTasks, completedTasks} = this.state;
+    let openTasks = this.props.group.getOpenTasks();
+    let completedTasks = this.props.group.getCompletedTasks();
 
     return (
       <div>
 
-        <h3>{this.props.group.name}</h3>
+        <div className="sk-h3 sk-bold">{this.props.group.name}</div>
+        <div className="sk-panel-row"/>
 
         <div>
-          <CreateTask onSubmit={this.createTask} onUpdate={this.saveUnsavedTask} unsavedTask={unsavedTask} />
+          <CreateTask
+            onSubmit={this.createTask}
+            onUpdate={this.saveUnsavedTask}
+            unsavedTask={this.props.group.unsavedTask}
+          />
         </div>
 
-        <div className='task-section'>
-          <h3>Open Tasks</h3>
-          <div id="open-tasks">
-            {openTasks.map((task, index) => {
-              return this.taskRowForTask(task, index);
-            })}
+        {openTasks.length > 0 &&
+          <div className='task-section'>
+            <h3>Open Tasks</h3>
+            <div ref={(ref) => this.openTasksElement = ref} className="open-tasks">
+              {openTasks.map((task, index) => {
+                return this.taskRowForTask(task, index);
+              })}
+            </div>
           </div>
-        </div>
+        }
 
-        <div className='task-section'>
-          <h3>Completed Tasks</h3>
-          <div id="completed-tasks">
-            {completedTasks.map((task, index) => {
-              return this.taskRowForTask(task, index);
-            })}
+        {completedTasks.length > 0 &&
+          <div className='task-section'>
+            <h3>Completed Tasks</h3>
+            <div ref={(ref) => this.completedTasksElement = ref} className="completed-tasks">
+              {completedTasks.map((task, index) => {
+                return this.taskRowForTask(task, index);
+              })}
+            </div>
+            {completedTasks.length > 0 &&
+              <a className="clear-button" onClick={this.onClearCompleted}>Clear Completed</a>
+            }
           </div>
-
-          {completedTasks.length > 0 &&
-            <a className="clear-button" onClick={this.onClearCompleted}>Clear Completed</a>
-          }
-        </div>
+        }
 
       </div>
     )
   }
-
 }

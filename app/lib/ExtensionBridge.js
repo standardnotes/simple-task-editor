@@ -32,8 +32,16 @@ export default class ExtensionBridge {
 
       this.dataString = note.content.text;
       this.unsavedTask = note.content.unsavedTask;
-      this.reloadData();
-      this.dataChangeHandler && this.dataChangeHandler(this.tasks);
+      this.reloadGroups();
+
+      if(note.content.unsavedTask && this.groups.length == 1) {
+        // Migrate old unsaved task to default group
+        this.groups[0].unsavedTask = note.content.unsavedTask;
+        note.content.unsavedTask = null;
+        this.save();
+      }
+
+      this.dataChangeHandler && this.dataChangeHandler();
     });
   }
 
@@ -53,14 +61,21 @@ export default class ExtensionBridge {
     this.dataChangeHandler = handler;
   }
 
-  reloadData() {
+  reloadGroups() {
     this.groups = TaskParser.createGroupsFromText(this.dataString);
-    console.log("Got groups", this.groups);
+  }
+
+  addGroup(name) {
+    let group = new Group(name);
+    this.groups.push(group);
+
+    this.dataChangeHandler && this.dataChangeHandler();
+    return group;
   }
 
   getGroups() {
     if(!this.groups) {
-      this.reloadData();
+      this.reloadGroups();
     }
     return this.groups;
   }

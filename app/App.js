@@ -9,7 +9,9 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="sn-component">
-        <GroupList />
+        <div className="sk-panel static">
+          <GroupList />
+        </div>
       </div>
     );
   }
