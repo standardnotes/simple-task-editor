@@ -31,7 +31,7 @@ export default class Tasks extends React.Component {
   }
 
   initiateSorting() {
-    if(TasksManager.get().isMobile() || this.didInitiateSorting) {
+    if(this.didInitiateSorting) {
       return;
     }
     this.didInitiateSorting = true;
@@ -39,6 +39,7 @@ export default class Tasks extends React.Component {
     let properties = {
       draggable: '.task',
       dragClass: 'task-dragging',
+      handle: '.checkbox-container',
       onEnd: this.taskCompletedDragging
     };
 
