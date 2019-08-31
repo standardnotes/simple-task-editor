@@ -1970,8 +1970,7 @@ body {
   opacity: 0.6; }
 
 .clear-button {
-  margin-top: 10px;
-  display: block; }
+  margin: 10px 10px 0 0; }
 
 .create-task-input {
   width: 100%;

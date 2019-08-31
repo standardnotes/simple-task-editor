@@ -96,6 +96,14 @@ export default class TasksManager {
     return this.tasks.filter((task) => {return task.completed == true})
   }
 
+  openTasks(tasks) {
+    tasks.forEach(task => {
+      task.markOpen();
+    });
+
+    this.tasks = this.categorizedTasks.openTasks.concat(tasks);
+  }
+
   removeTasks(tasks) {
     this.tasks = this.tasks.filter((task) => {
       return !tasks.includes(task);
@@ -132,7 +140,12 @@ export default class TasksManager {
     this.tasks = this.tasks.move(from, to);
   }
 
-  clearCompleted() {
+  reopenCompleted() {
+    this.openTasks(this.completedTasks());
+    this.save();
+  }
+
+  deleteCompleted() {
     this.removeTasks(this.completedTasks());
     this.save();
   }
