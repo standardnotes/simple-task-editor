@@ -123,9 +123,16 @@ export default class Tasks extends React.Component {
     this.updateTasks();
   }
 
-  onClearCompleted = () => {
-    if(confirm("Are you sure you want to clear completed tasks?")) {
-      TasksManager.get().clearCompleted();
+  onReopenCompleted = () => {
+    if(confirm("Are you sure you want to reopen completed tasks?")) {
+      TasksManager.get().reopenCompleted();
+      this.updateTasks();
+    }
+  }
+  
+  onDeleteCompleted = () => {
+    if(confirm("Are you sure you want to delete completed tasks?")) {
+      TasksManager.get().deleteCompleted();
       this.updateTasks();
     }
   }
@@ -172,7 +179,10 @@ export default class Tasks extends React.Component {
           </div>
 
           {completedTasks.length > 0 &&
-            <a className="clear-button" onClick={this.onClearCompleted}>Clear Completed</a>
+            <div>
+              <a className="clear-button" onClick={this.onReopenCompleted}>Reopen Completed</a>
+              <a className="clear-button" onClick={this.onDeleteCompleted}>Delete Completed</a>
+            </div>
           }
         </div>
 
