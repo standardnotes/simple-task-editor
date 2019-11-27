@@ -1891,9 +1891,9 @@ body {
   flex-direction: row;
   margin-bottom: 8px; }
   .task .checkbox-container {
-    padding-left: 20px;
-    margin-top: 6px;
-    margin-left: 1px;
+    padding-left: 22px;
+    margin-top: 5px;
+    margin-left: 0px;
     display: block;
     position: relative;
     cursor: pointer;
@@ -1932,8 +1932,8 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    height: 10px;
-    width: 10px;
+    height: 12px;
+    width: 12px;
     border-radius: 1px;
     background-color: var(--sn-stylekit-contrast-background-color);
     border: 1px solid var(--sn-stylekit-contrast-border-color); }
@@ -1941,12 +1941,12 @@ body {
       content: "";
       position: absolute;
       display: none;
-      left: 3px;
+      left: 4px;
       top: 1px;
       width: 3px;
       height: 6px;
       border: solid white;
-      border-width: 0 1px 1px 0;
+      border-width: 0 2px 2px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
       transform: rotate(45deg); }
@@ -1963,7 +1963,9 @@ body {
     background-color: transparent; }
 
 .task-dragging {
-  background-color: white; }
+  padding: 2px;
+  background-color: var(--sn-stylekit-contrast-background-color);
+  border: 1px dashed var(--sn-stylekit-border-color); }
 
 .completed {
   text-decoration: line-through;

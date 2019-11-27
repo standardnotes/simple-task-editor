@@ -37,6 +37,8 @@ export default class Tasks extends React.Component {
     this.didInitiateSorting = true;
 
     let properties = {
+      delay: 100, // time in milliseconds to define when the sorting should start
+      delayOnTouchOnly: true, // only delay if user is using touch
       draggable: '.task',
       dragClass: 'task-dragging',
       handle: '.checkbox-container',
@@ -129,7 +131,7 @@ export default class Tasks extends React.Component {
       this.updateTasks();
     }
   }
-  
+
   onDeleteCompleted = () => {
     if(confirm("Are you sure you want to delete completed tasks?")) {
       TasksManager.get().deleteCompleted();
