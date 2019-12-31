@@ -23,17 +23,17 @@ body {
   margin-bottom: 8px;
 
   .checkbox-container {
-    padding-left: 20px;
-    margin-top: 6px;
-    margin-left: 1px;
-    display: block;
+    display: flex;
+    align-items: center;
     position: relative;
+    height: var(--sn-stylekit-font-size-editor);
     cursor: pointer;
-    font-size: 22px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    top: calc(var(--sn-stylekit-font-size-editor)/2);
+    transform: translateY(-50%);
 
     input:checked ~ .checkmark:after {
       display: block;
@@ -75,23 +75,17 @@ body {
     }
   }
 
- .checkbox {
-   margin-top: 7px;
- }
-
  .checkmark {
-   position: absolute;
-   top: 0;
-   left: 0;
    height: 10px;
    width: 10px;
+   margin-right: 10px;
    border-radius: 1px;
    background-color: var(--sn-stylekit-contrast-background-color);;
    border: 1px solid var(--sn-stylekit-contrast-border-color);
 
    &:after {
     content: "";
-    position: absolute;
+    position: relative;
     display: none;
     left: 3px;
     top: 1px;
@@ -106,16 +100,18 @@ body {
  }
 
  textarea.task-input-textarea {
-   font-family: sans-serif;
-   border: none;
-   width: 100%;
-   resize: none;
-   font-size: var(--sn-stylekit-font-size-editor);
-   color: var(--sn-stylekit-editor-foreground-color);
-   outline: none;
-   resize: none;
-   overflow: hidden;
-   background-color: transparent;
+    padding: 0;
+    font-family: var(--sn-stylekit-sans-serif-font);
+    border: none;
+    width: 100%;
+    resize: none;
+    font-size: var(--sn-stylekit-font-size-editor);
+    line-height: var(--sn-stylekit-font-size-editor);
+    color: var(--sn-stylekit-editor-foreground-color);
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    background-color: transparent;
  }
 }
 
