@@ -32,7 +32,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    top: calc(var(--sn-stylekit-font-size-editor)/2);
+    top: calc(var(--sn-stylekit-font-size-editor)*1.21/2);
     transform: translateY(-50%);
 
     input:checked ~ .checkmark:after {
@@ -106,7 +106,7 @@ body {
     width: 100%;
     resize: none;
     font-size: var(--sn-stylekit-font-size-editor);
-    line-height: var(--sn-stylekit-font-size-editor);
+    line-height: 1.21;
     color: var(--sn-stylekit-editor-foreground-color);
     outline: none;
     resize: none;
