@@ -1,7 +1,7 @@
 import Task from "../models/Task";
 import ComponentManager from 'sn-components-api';
 
-let TaskDelimitter = "\n";
+let TaskDelimiter = "\n";
 
 export default class TasksManager {
 
@@ -56,7 +56,7 @@ export default class TasksManager {
 
   parseRawTasksString(string) {
     if(!string) {string = ''}
-    var allTasks = string.split(TaskDelimitter);
+    var allTasks = string.split(TaskDelimiter);
     var openTasks = [], completedTasks = [];
     return allTasks.filter((s) => {return s.replace(/ /g, '').length > 0}).map((rawString) => {
       return this.createTask(rawString);
@@ -90,6 +90,10 @@ export default class TasksManager {
 
   setUnsavedTask(text) {
     this.unsavedTask = text;
+  }
+
+  openTasksList() {
+    return this.tasks.filter((task) => {return task.completed == false})
   }
 
   completedTasks() {
@@ -140,6 +144,37 @@ export default class TasksManager {
     this.tasks = this.tasks.move(from, to);
   }
 
+  sortTasks(sort) {
+    var tasks = this.getTasks();
+    var openTasks = [], completedTasks = [];
+    tasks.forEach((task, index) => {
+      if(task.completed) {
+        completedTasks.push(task.rawString);
+      } else {
+        openTasks.push(task.rawString);
+      }
+    })
+
+    openTasks.sort();
+    completedTasks.sort();
+    if (sort == "reverse"){
+      openTasks.reverse();
+      completedTasks.reverse();
+    }
+
+    openTasks.forEach(rawString => {
+      openTasks[openTasks.indexOf(rawString)] = this.createTask(rawString);
+      });
+
+    completedTasks.forEach(rawString => {
+      completedTasks[completedTasks.indexOf(rawString)] = this.createTask(rawString);
+      });
+    
+    this.tasks = openTasks.concat(completedTasks);
+    this.categorizedTasks = {unsavedTask: this.unsavedTask, openTasks: openTasks, completedTasks: completedTasks};
+    this.save();
+  }
+
   reopenCompleted() {
     this.openTasks(this.completedTasks());
     this.save();
@@ -152,6 +187,11 @@ export default class TasksManager {
 
   deleteTask(task) {
     this.removeTasks([task]);
+    this.save();
+  }
+
+  deleteAllTasks() {
+    this.removeTasks(this.tasks)
     this.save();
   }
 
@@ -204,7 +244,7 @@ export default class TasksManager {
   save() {
     this.dataString = this.tasks.map((task) => {
       return task.rawString
-    }).join(TaskDelimitter);
+    }).join(TaskDelimiter);
 
     if(this.note) {
       // Be sure to capture this object as a variable, as this.note may be reassigned in `streamContextItem`, so by the time

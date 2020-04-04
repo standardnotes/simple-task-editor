@@ -68,7 +68,7 @@ export default class Tasks extends React.Component {
     }
 
     setTimeout(() => {
-      // Allow UI to show checkmark before transferring to other list
+      // Allow UI to show check mark before transferring to other list
       this.taskStatusUpdated();
     }, 300);
   }
@@ -125,6 +125,20 @@ export default class Tasks extends React.Component {
     this.updateTasks();
   }
 
+  onSort = () => {
+    if(confirm("Are you sure you want to sort your tasks in alphabetical order?")) {
+      TasksManager.get().sortTasks("sort");
+      this.updateTasks();
+    }
+  }
+
+  onReverseSort = () => {
+    if(confirm("Are you sure you want to reverse sort your tasks in reverse alphabetical order?")) {
+      TasksManager.get().sortTasks("reverse");
+      this.updateTasks();
+    }
+  }
+
   onReopenCompleted = () => {
     if(confirm("Are you sure you want to reopen completed tasks?")) {
       TasksManager.get().reopenCompleted();
@@ -139,6 +153,7 @@ export default class Tasks extends React.Component {
     }
   }
 
+  // index is declared but never read
   taskRowForTask(task, index) {
     return (
       <TaskRow
@@ -179,7 +194,14 @@ export default class Tasks extends React.Component {
               return this.taskRowForTask(task, index);
             })}
           </div>
-
+          {completedTasks.length >= 0 &&
+            <div>
+              <a className="clear-button" onClick={this.onSort}>Sort</a>
+              <a className="clear-button" onClick={this.onReverseSort}>Reverse Sort</a>
+              <br></br>
+              <br></br>
+            </div>
+          }
           {completedTasks.length > 0 &&
             <div>
               <a className="clear-button" onClick={this.onReopenCompleted}>Reopen Completed</a>

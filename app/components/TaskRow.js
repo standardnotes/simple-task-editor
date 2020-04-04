@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class TaskRow extends Component {
+export default class TaskRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {isChecked: props.task.completed, task: props.task};
@@ -39,8 +39,8 @@ class TaskRow extends Component {
   }
 
   onKeyUp = (event) => {
-    // Delete task if empty and enter pressed
-    if(event.keyCode == 13) {
+    // Delete task if empty and enter (13), backspace (8), or delete (46) are pressed
+    if(event.key == "Enter"||event.keyCode == 13 || event.keyCode == 8 || event.keyCode == 46) {
       if(this.props.task.isEmpty()) {
         this.props.deleteTask(this.props.task);
         event.preventDefault();
@@ -53,7 +53,7 @@ class TaskRow extends Component {
   onKeyPress = (event) => {
     if(event.key == "Enter") {
       // We want to disable any action on enter, since newlines are reserved
-      // and are how tasks are delimitted.
+      // and are how tasks are delimited.
       event.preventDefault();
     }
   }
@@ -103,5 +103,3 @@ TaskRow.propTypes = {
   task: PropTypes.object.isRequired,
   handleCheckboxChange: PropTypes.func.isRequired,
 };
-
-export default TaskRow;
