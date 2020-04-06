@@ -157,7 +157,7 @@ export default class TasksManager {
 
     openTasks.sort();
     completedTasks.sort();
-    if (sort == "reverse"){
+    if (sort === "reverse"){
       openTasks.reverse();
       completedTasks.reverse();
     }

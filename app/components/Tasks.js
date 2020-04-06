@@ -127,7 +127,7 @@ export default class Tasks extends React.Component {
 
   onSort = () => {
     if(confirm("Are you sure you want to sort your tasks in alphabetical order?")) {
-      TasksManager.get().sortTasks("sort");
+      TasksManager.get().sortTasks("alphabetical");
       this.updateTasks();
     }
   }
