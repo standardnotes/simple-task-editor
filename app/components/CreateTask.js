@@ -57,7 +57,7 @@ export default class CreateTask extends React.Component {
 }
 
 CreateTask.propTypes = {
-  unsavedTask: PropTypes.object,
+  unsavedTask: PropTypes.string,
   onUpdate: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired
 };
