@@ -41,11 +41,17 @@ export default class CreateTask extends React.Component {
   }
 
   render() {
+    let placeholderText = 'Type in your task, then press Enter.';
+
+    if (TasksManager.get().showTutorial) {
+      placeholderText = 'What do you want to get done?';
+    }
+
     return (
       <input
         className='create-task-input'
         ref={(ref) => {this.input = ref;}}
-        placeholder='Insert text here, then press Enter'
+        placeholder={placeholderText}
         type='text'
         dir='auto'
         value={this.props.unsavedTask}
