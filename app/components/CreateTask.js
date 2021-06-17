@@ -41,10 +41,10 @@ export default class CreateTask extends React.Component {
   }
 
   render() {
-    let placeholderText = 'Type in your task, then press Enter.';
+    let placeholderText = '';
 
     if (TasksManager.get().showTutorial) {
-      placeholderText = 'What do you want to get done?';
+      placeholderText = 'Type in your task, then press Enter.';
     }
 
     return (
