@@ -45,6 +45,7 @@ export default class CreateTask extends React.Component {
       <input
         className='create-task-input'
         ref={(ref) => {this.input = ref;}}
+        placeholder='Insert text here, then press Enter'
         type='text'
         dir='auto'
         value={this.props.unsavedTask}
